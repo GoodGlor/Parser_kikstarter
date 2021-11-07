@@ -47,6 +47,7 @@ class Kickstarter:
             print(all_values)
 
 
+
 kik = Kickstarter()
 for x in range(1, 10):
     kik.parse(x, 'popularity')

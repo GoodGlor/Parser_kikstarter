@@ -3,6 +3,7 @@ import aiohttp
 import csv
 
 
+
 class ValidationProxy:
     def __init__(self):
         self._url = 'https://httpbin.org/ip'
