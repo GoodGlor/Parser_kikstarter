@@ -54,8 +54,3 @@ class Proxies:
         for page in range(1, 6):
             self.proxy_cz(page)
         self._browser.close()
-
-
-
-proxy = Proxies()
-proxy.run()

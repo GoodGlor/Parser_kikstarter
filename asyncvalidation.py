@@ -1,7 +1,7 @@
 import asyncio
 import aiohttp
 import csv
-
+from proxies import Proxies
 
 
 class ValidationProxy:
@@ -10,6 +10,8 @@ class ValidationProxy:
 
     def write_proxy(self, value: str) -> None:
         with open('valid_proxies.txt', 'a+') as file:
+            if value == 'clear':
+                file.truncate(0)
             file.seek(0)
             content = file.readlines()
             if f'{value}\n' not in content:
@@ -29,7 +31,7 @@ class ValidationProxy:
 
     async def fetch(self, session, url: str, proxy: str, id_proxy: int) -> None:
         try:
-            async with session.get(url=url, proxy=proxy, timeout=10) as response:
+            async with session.get(url=url, proxy=proxy, timeout=5) as response:
                 json_response = await response.json()
                 await asyncio.sleep(1)
                 print(f'Proxy {id_proxy} - VALID')
@@ -51,8 +53,12 @@ class ValidationProxy:
             await asyncio.gather(*tasks)
 
     def run(self):
+        self.write_proxy('clear')
         asyncio.run(self.check_valid())
 
 
-validation = ValidationProxy()
-validation.run()
+def main():
+    proxy = Proxies()
+    valid = ValidationProxy()
+    proxy.run()
+    valid.run()
